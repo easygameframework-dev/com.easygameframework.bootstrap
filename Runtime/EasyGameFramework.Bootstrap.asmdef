@@ -1,0 +1,23 @@
+{
+    "name": "EasyGameFramework.Bootstrap",
+    "rootNamespace": "",
+    "references": [
+        "EasyGameFramework",
+        "EasyGameFramework.Tasks",
+        "EasyToolkit.Inspector",
+        "EasyGameFramework.Essentials",
+        "EasyGameFramework.YooAsset",
+        "EasyToolkit.Core",
+        "UniTask",
+        "YooAsset"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
