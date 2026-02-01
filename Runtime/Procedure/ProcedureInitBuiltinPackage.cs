@@ -21,24 +21,54 @@ namespace EasyGameFramework.Bootstrap
 
             try
             {
+                {
 #if UNITY_EDITOR
-                await ProcedureInitPackage.InitializePackageAsync(Constant.Package.Builtin, PlayMode.EditorSimulateMode);
+                    await ProcedureInitPackage.InitializePackageAsync(Constant.Package.Framework, PlayMode.EditorSimulateMode);
 #else
-                await ProcedureInitPackage.InitializePackageAsync(Constant.Package.Builtin, PlayMode.OfflinePlayMode);
+                    await ProcedureInitPackage.InitializePackageAsync(Constant.Package.Framework, PlayMode.OfflinePlayMode);
 #endif
 
-                var package = YooAssetsHelper.GetPackage(Constant.Package.Builtin);
+                    var package = YooAssetsHelper.GetPackage(Constant.Package.Framework);
 
-                var packageVersionOperation = package.RequestPackageVersionAsync();
-                await packageVersionOperation.ToUniTask();
-                var packageVersion = packageVersionOperation.PackageVersion;
+                    var packageVersionOperation = package.RequestPackageVersionAsync();
+                    await packageVersionOperation.ToUniTask();
+                    var packageVersion = packageVersionOperation.PackageVersion;
 
-                GameEntry.Setting.SetString(Utility.Text.Format(Constant.Setting.PackageVersion, Constant.Package.Builtin), packageVersion);
+                    GameEntry.Setting.SetString(
+                        Utility.Text.Format(Constant.Setting.PackageVersion, Constant.Package.Framework), packageVersion);
 
-                var packageManifestOperation = package.UpdatePackageManifestAsync(packageVersion);
-                await packageManifestOperation.ToUniTask();
+                    var packageManifestOperation = package.UpdatePackageManifestAsync(packageVersion);
+                    await packageManifestOperation.ToUniTask();
+                }
 
-                Log.Debug($"Initialize builtin package success.");
+                {
+                    if (YooAssets.TryGetPackage(Constant.Package.Builtin) == null)
+                    {
+                        Log.Warning($"No builtin package found.");
+                        ChangeState<ProcedureSplash>(procedureOwner);
+                        return;
+                    }
+
+#if UNITY_EDITOR
+                    await ProcedureInitPackage.InitializePackageAsync(Constant.Package.Builtin, PlayMode.EditorSimulateMode);
+#else
+                    await ProcedureInitPackage.InitializePackageAsync(Constant.Package.Builtin, PlayMode.OfflinePlayMode);
+#endif
+
+                    var package = YooAssetsHelper.GetPackage(Constant.Package.Builtin);
+
+                    var packageVersionOperation = package.RequestPackageVersionAsync();
+                    await packageVersionOperation.ToUniTask();
+                    var packageVersion = packageVersionOperation.PackageVersion;
+
+                    GameEntry.Setting.SetString(
+                        Utility.Text.Format(Constant.Setting.PackageVersion, Constant.Package.Builtin), packageVersion);
+
+                    var packageManifestOperation = package.UpdatePackageManifestAsync(packageVersion);
+                    await packageManifestOperation.ToUniTask();
+
+                    Log.Debug($"Initialize builtin package success.");
+                }
 
                 ChangeState<ProcedureSplash>(procedureOwner);
             }

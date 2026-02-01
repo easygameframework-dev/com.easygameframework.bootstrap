@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
 using EasyGameFramework.Core.Resource;
+using EasyGameFramework.Essentials;
 using EasyGameFramework.Tasks;
 using EasyGameFramework.YooAsset;
 using YooAsset;
@@ -25,15 +26,16 @@ namespace EasyGameFramework.Bootstrap
 
         protected override async UniTask OnEnterAsync(IFsm<IProcedureManager> procedureOwner)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
-
-            if (await InitializePackageWithRetryAsync(packageName))
+            if (YooAssets.TryGetPackage(Constant.Package.Main) == null)
             {
-                if (packageName == GameEntry.Resource.DefaultPackageName)
-                {
-                    YooAssetsHelper.SetDefaultPackage(YooAssetsHelper.GetPackage(GameEntry.Resource.DefaultPackageName));
-                }
+                Log.Warning($"No main package found.");
+                ChangeState<ProcedureLoadAssembly>(_procedureOwner);
+                return;
+            }
 
+            if (await InitializePackageWithRetryAsync(Constant.Package.Main))
+            {
+                YooAssetsHelper.SetDefaultPackage(YooAssetsHelper.GetPackage(Constant.Package.Main));
                 ChangeState<ProcedureUpdateVersion>(_procedureOwner);
             }
             else
@@ -44,8 +46,7 @@ namespace EasyGameFramework.Bootstrap
 
         protected override string GetLoadingSpinnerDescription(int phaseIndex, int phaseCount)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
-            return $"初始化资源包“{packageName}”......";
+            return $"初始化资源包“{Constant.Package.Main}”......";
         }
 
         private async UniTask<bool> InitializePackageWithRetryAsync(string packageName, int retryCount = 0)

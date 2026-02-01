@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
+using EasyGameFramework.Essentials;
 using EasyGameFramework.Tasks;
 using EasyGameFramework.YooAsset;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace EasyGameFramework.Bootstrap
         private long _lastUpdateDownloadedSize;
 
         private ResourceDownloaderOperation Downloader => _downloader ??=
-            YooAssetsHelper.GetPackageResourceDownloader(GameEntry.Resource.DefaultPackageName);
+            YooAssetsHelper.GetPackageResourceDownloader(Constant.Package.Main);
 
         private long CurrentSpeedBytes
         {

@@ -14,7 +14,7 @@ namespace EasyGameFramework.Bootstrap
     }
 
     [EasyInspector]
-    [ScriptableObjectSingletonConfiguration("Assets/Resources/Configs")]
+    [ScriptableObjectSingletonConfiguration("Assets/EasyGameFramework/Resources")]
     public class GameConfigAsset : ScriptableObjectSingleton<GameConfigAsset>
     {
         [Title("Assets")]

@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
+using EasyGameFramework.Essentials;
 using EasyGameFramework.Tasks;
 using EasyGameFramework.YooAsset;
 using UnityEngine;
@@ -14,10 +15,10 @@ namespace EasyGameFramework.Bootstrap
 
         protected override async UniTask OnEnterAsync(IFsm<IProcedureManager> procedureOwner)
         {
-            Log.Debug($"Create downloader for package '{GameEntry.Resource.DefaultPackageName}'");
+            Log.Debug($"Create downloader for package '{Constant.Package.Main}'");
 
             var downloader = YooAssetsHelper.CreatePackageResourceDownloader(
-                GameEntry.Resource.DefaultPackageName,
+                Constant.Package.Main,
                 GameEntry.Resource.DownloadingMaxNum,
                 GameEntry.Resource.FailedTryAgain);
 

@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
 using EasyGameFramework.Core.Resource;
+using EasyGameFramework.Essentials;
 using EasyGameFramework.Tasks;
 using EasyGameFramework.YooAsset;
 using YooAssetInfo = YooAsset.AssetInfo;
@@ -19,11 +20,10 @@ namespace EasyGameFramework.Bootstrap
 
         protected override async UniTask OnEnterAsync(IFsm<IProcedureManager> procedureOwner)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
             Log.Debug("Preload assets");
             if (GameConfigAsset.Instance.PreloadAssetTags.Count != 0)
             {
-                var package = YooAssetsHelper.GetPackage(packageName);
+                var package = YooAssetsHelper.GetPackage(Constant.Package.Main);
                 var assetInfos = package.GetAssetInfos(GameConfigAsset.Instance.PreloadAssetTags.ToArray());
 
                 if (assetInfos.Length > 0)
@@ -48,8 +48,7 @@ namespace EasyGameFramework.Bootstrap
 
         protected override string GetLoadingSpinnerDescription(int phaseIndex, int phaseCount)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
-            return $"预加载资源包“{packageName}”......";
+            return $"预加载资源包“{Constant.Package.Main}”......";
         }
 
         private async UniTask<UnityEngine.Object> LoadAssetWithRetryAsync(YooAssetInfo assetInfo, int retryCount = 0)

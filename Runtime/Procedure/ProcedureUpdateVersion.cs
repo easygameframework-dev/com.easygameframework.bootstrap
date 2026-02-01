@@ -35,24 +35,21 @@ namespace EasyGameFramework.Bootstrap
                 }
             }
 
-            var packageName = GameEntry.Resource.DefaultPackageName;
-
-            var packageVersion = await RequestPackageVersionWithRetryAsync(packageName);
+            var packageVersion = await RequestPackageVersionWithRetryAsync(Constant.Package.Main);
             if (string.IsNullOrEmpty(packageVersion))
             {
                 ChangeState<ProcedureEndGame>(procedureOwner);
                 return;
             }
 
-            GameEntry.Setting.SetString(Utility.Text.Format(Constant.Setting.PackageVersion, packageName), packageVersion);
+            GameEntry.Setting.SetString(Utility.Text.Format(Constant.Setting.PackageVersion, Constant.Package.Main), packageVersion);
 
             ChangeState<ProcedureUpdateManifest>(procedureOwner);
         }
 
         protected override string GetLoadingSpinnerDescription(int phaseIndex, int phaseCount)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
-            return $"请求资源包“{packageName}”版本......";
+            return $"请求资源包“{Constant.Package.Main}”版本......";
         }
 
         private async UniTask<string> RequestPackageVersionWithRetryAsync(string packageName, int retryCount = 0)

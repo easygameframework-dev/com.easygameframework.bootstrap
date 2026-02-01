@@ -17,9 +17,7 @@ namespace EasyGameFramework.Bootstrap
     {
         protected override async UniTask OnEnterAsync(IFsm<IProcedureManager> procedureOwner)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
-
-            if (await UpdatePackageManifestWithRetryAsync(packageName))
+            if (await UpdatePackageManifestWithRetryAsync(Constant.Package.Main))
             {
                 ChangeState<ProcedureCreateDownloader>(procedureOwner);
             }
@@ -31,8 +29,7 @@ namespace EasyGameFramework.Bootstrap
 
         protected override string GetLoadingSpinnerDescription(int phaseIndex, int phaseCount)
         {
-            var packageName = GameEntry.Resource.DefaultPackageName;
-            return $"更新资源包“{packageName}”清单......";
+            return $"更新资源包“{Constant.Package.Main}”清单......";
         }
 
         private async UniTask<bool> UpdatePackageManifestWithRetryAsync(string packageName, int retryCount = 0)
