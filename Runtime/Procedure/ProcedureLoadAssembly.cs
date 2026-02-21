@@ -8,6 +8,7 @@ using EasyGameFramework.Core;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
 using EasyGameFramework.Core.Resource;
+using EasyGameFramework.Essentials;
 using EasyGameFramework.Tasks;
 using PlayMode = EasyGameFramework.Core.Resource.PlayMode;
 

@@ -1,8 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
-using EasyGameFramework.Tasks;
-using UnityEngine;
+using EasyGameFramework.Essentials;
 
 namespace EasyGameFramework.Bootstrap
 {

@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using EasyGameFramework.Core.Fsm;
 using EasyGameFramework.Core.Procedure;
 using EasyGameFramework.Essentials;
-using EasyGameFramework.Tasks;
 
 namespace EasyGameFramework.Bootstrap
 {
@@ -16,7 +15,7 @@ namespace EasyGameFramework.Bootstrap
             if (UISpinnerBox.LastSpinnerBox)
             {
                 await GameEntry.UI.UpdateSpinnerBoxAsync("加载完成", 1);
-                await GameEntry.UI.EndSpinnerBoxAsync();
+                GameEntry.UI.EndSpinnerBox();
             }
         }
     }
